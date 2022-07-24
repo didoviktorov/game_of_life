@@ -32,14 +32,26 @@ describe("GameBoard.vue", () => {
     expect(board.find("#overlay").exists()).toBe(false);
   });
 
-  it("Matrix with length of 10 x 10 when child component emits init event", async () => {
+  it("Matrix with length of 10 x 10 when child component emits init event", () => {
     let controlsComponent = board.findComponent(UserControls);
-    await controlsComponent.vm.$emit("init", {
+    controlsComponent.vm.$emit("init", {
       size: controlsComponent.vm.size,
       pattern: controlsComponent.vm.pattern,
     });
     let matrix = board.vm.matrix;
     expect(matrix.length).toBe(10);
     expect(matrix[0].length).toBe(10);
+  });
+
+  it("GameBoard to have 0 alive cells with 'By Click' pattern", () => {
+    let controlsComponent = board.findComponent(UserControls);
+    controlsComponent.vm.pattern = "By Click";
+    controlsComponent.vm.$emit("init", {
+      size: controlsComponent.vm.size,
+      pattern: controlsComponent.vm.pattern,
+    });
+
+    let aliveCellsCount = board.vm.totalAliveCells;
+    expect(aliveCellsCount).toBe(0);
   });
 });
