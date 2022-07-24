@@ -79,4 +79,36 @@ describe("GameBoard.vue", () => {
     let aliveCellsByClass = board.findAll(".alive");
     expect(aliveCellsByClass.length).toBe(10);
   });
+
+  it("GameBoard Beacon - ever lasting alive cells test with one tick", async () => {
+    let controlsComponent = board.findComponent(UserControls);
+    controlsComponent.vm.pattern = "By Click";
+    await controlsComponent.vm.$emit("init", {
+      size: controlsComponent.vm.size,
+      pattern: controlsComponent.vm.pattern,
+    });
+    const cellsBeaconIndices = [0, 1, 10, 11, 22, 23, 32, 33];
+    let cellsCollection = board.findAll(".cell");
+    if (cellsCollection.length) {
+      for (let i = 0; i < cellsBeaconIndices.length; i++) {
+        let currentCell = cellsCollection.at(cellsBeaconIndices[i]);
+        await currentCell.trigger("click");
+      }
+    }
+
+    let aliveCellsCount = board.vm.totalAliveCells;
+    expect(aliveCellsCount).toBe(8);
+
+    await controlsComponent.vm.$emit("tick");
+    let aliveCellsByClass = board.findAll(".alive");
+    expect(aliveCellsByClass.length).toBe(6);
+
+    await controlsComponent.vm.$emit("tick");
+    aliveCellsByClass = board.findAll(".alive");
+    expect(aliveCellsByClass.length).toBe(8);
+
+    await controlsComponent.vm.$emit("tick");
+    aliveCellsByClass = board.findAll(".alive");
+    expect(aliveCellsByClass.length).toBe(6);
+  });
 });
