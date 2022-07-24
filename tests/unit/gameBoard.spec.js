@@ -54,4 +54,27 @@ describe("GameBoard.vue", () => {
     let aliveCellsCount = board.vm.totalAliveCells;
     expect(aliveCellsCount).toBe(0);
   });
+
+  it("GameBoard check alive cells with 'By Click' pattern when some cells are clicked", async () => {
+    let controlsComponent = board.findComponent(UserControls);
+    controlsComponent.vm.pattern = "By Click";
+    await controlsComponent.vm.$emit("init", {
+      size: controlsComponent.vm.size,
+      pattern: controlsComponent.vm.pattern,
+    });
+
+    let cellsCollection = board.findAll(".cell");
+    if (cellsCollection.length) {
+      for (let i = 0; i < 10; i++) {
+        let currentCell = cellsCollection.at(i);
+        await currentCell.trigger("click");
+      }
+    }
+
+    let aliveCellsCount = board.vm.totalAliveCells;
+    expect(aliveCellsCount).toBe(10);
+
+    let aliveCellsByClass = board.findAll(".alive");
+    expect(aliveCellsByClass.length).toBe(10);
+  });
 });
