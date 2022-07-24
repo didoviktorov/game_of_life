@@ -112,4 +112,17 @@ describe("GameBoard.vue", () => {
     aliveCellsByClass = board.findAll(".alive");
     expect(aliveCellsByClass.length).toBe(6);
   });
+
+  it("GameBoard default data after 'reset'", () => {
+    let controlsComponent = board.findComponent(UserControls);
+    controlsComponent.vm.$emit("reset");
+
+    expect(board.vm.matrix).toHaveLength(0);
+    expect(board.vm.isMarrixCreated).toBe(false);
+    expect(board.vm.interval).toBe(null);
+    expect(board.vm.pattern).toEqual("");
+    expect(board.vm.isRunning).toBe(false);
+    expect(board.vm.totalAliveCells).toEqual(0);
+    expect(board.vm.totalCycles).toEqual(0);
+  });
 });
