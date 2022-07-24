@@ -32,7 +32,7 @@ describe("GameBoard.vue", () => {
     expect(board.find("#overlay").exists()).toBe(false);
   });
 
-  it("Matrix with lenth of 10 x 10 when child component emits init event", async () => {
+  it("Matrix with length of 10 x 10 when child component emits init event", async () => {
     let controlsComponent = board.findComponent(UserControls);
     await controlsComponent.vm.$emit("init", {
       size: controlsComponent.vm.size,
