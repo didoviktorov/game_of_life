@@ -81,6 +81,7 @@ describe("GameBoard.vue", () => {
   });
 
   it("GameBoard Beacon - ever lasting alive cells test with one tick", async () => {
+    /* more information for Beacon form - https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life  */
     let controlsComponent = board.findComponent(UserControls);
     controlsComponent.vm.pattern = "By Click";
     await controlsComponent.vm.$emit("init", {
