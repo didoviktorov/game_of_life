@@ -1,6 +1,8 @@
-import { mount } from "@vue/test-utils";
+import { mount, enableAutoUnmount } from "@vue/test-utils";
 import GameBoard from "@/components/GameBoard.vue";
 import UserControls from "@/components/UserControls.vue";
+
+enableAutoUnmount(afterEach);
 
 describe("GameBoard.vue", () => {
   let board;
